@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#075e54">
+    <title>رفيق المسلم</title>
+    <style>
+/* =====================================================
+   رفيق المسلم
+   CSS - النسخة الكاملة
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    direction: rtl;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
+    color: white;
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 22px;
+    text-align: center;
+}
+
+.header p {
+    margin: 5px 0 0 0;
+    text-align: center;
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+/* Navigation */
+.nav-tabs {
+    display: flex;
+    background: white;
+    overflow-x: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 70px;
+    z-index: 99;
+}
+
+.nav-tab {
+    flex: 1;
+    min-width: 80px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.nav-tab.active {
+    border-bottom-color
+  : #075e54;
+    color: #075e54;
+    font-weight: bold;
+    background: #f0f8f7;
+}
+
+.nav-tab:hover {
+    background: #f5f5f5;
+}
+
+/* Content */
+.content {
+    padding: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #e8e8e8;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #075e54;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.prayer-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.prayer-time:last-child {
+    border-bottom: none;
+}
+
+.prayer-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.prayer-hour {
+    color: #075e54;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Qibla */
+.qibla-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.qibla-compass {
+    width: 200px;
+    height: 200px;
+    border: 3px solid #075e54;
+    border-radius: 50%;
+    margin: 20px auto;
+    position: relative;
+    background: #fafffe;
+}
+
+.qibla-arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 80px;
+    background: #e74c3c;
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%) rotate(0deg);
+    border-radius: 2px;
+}
+
+.qibla-arrow::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -6px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 15px solid #e74c3c;
+}
+
+.qibla-degree {
+    font-size: 24px;
+    font-weight: bold;
+    color: #075e54;
+    margin-top: 15px;
+}
+
+/* Azkar */
+.azkar-item {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-right: 4px solid #075e54;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.azkar-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.azkar-count {
+    display: inline-block;
+    background: #075e54;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.azkar-source {
+    font-size: 12px;
+    color: #888;
+    margin-top: 8px;
+}
+
+/* Tasbih */
+.tasbih-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.tasbih-counter {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #075e54, #128c7e);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(7,94,84,0.3);
+    user-select: none;
+    transition: transform 0.1s;
+}
+
+.tasbih-counter:active {
+    transform: scale(0.95);
+}
+
+.tasbih-number {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.tasbih-label {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+
+.tasbih-text {
+    font-size: 20px;
+    color: #075e54;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.tasbih-reset {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 15px;
+      }/* Quran */
+.surah-item {display:flex;justify-content:space-between;align-items:center;padding:14px 15px;background:white;margin-bottom:8px;border-radius:10px;cursor:pointer;transition:all 0.2s;border:1px solid #eee;}
+.surah-item:hover{background:#f0f8f7;border-color:#075e54;transform:translateX(-3px);}
+.surah-name{font-weight:bold;color:#2c3e50;font-size:16px;}
+.surah-info{font-size:12px;color:#888;}
+.surah-number{background:#075e54;color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;}
+.btn{background:#075e54;color:white;border:none;padding:12px 20px;border-radius:8px;cursor:pointer;font-size:15px;width:100%;margin:8px 0;transition:all 0.2s;font-weight:500;}
+.btn:hover{background:#064e45;}
+.btn-secondary{background:#f0f2f5;color:#333;border:1px solid #ddd;}
+.input-field{width:100%;padding:12px 15px;border:1px solid #ddd;border-radius:8px;font-size:15px;margin:8px 0;outline:none;}
+.quran-reader{background:#fffef5;border:2px solid #d4c5a0;border-radius:12px;padding:20px;line-height:2.2;font-size:20px;text-align:justify;box-shadow:inset 0 0 20px rgba(212,197,160,0.2);}
+.ayah{margin-bottom:8px;}
+.ayah-number{display:inline-block;background:#075e54;color:white;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:12px;margin:0 5px;}
+.footer{text-align:center;padding:20px;color:#888;font-size:12px;margin-top:30px;}
+</style>
+</head>
+<body>
+<div class="header"><h1>🕌 رفيق المسلم</h1><p>صديقك اليومي للعبادة والذكر</p></div>
+<div class="nav-tabs">
+<div class="nav-tab active" onclick="showTab('prayer')">🕐 الصلاة</div>
+<div class="nav-tab" onclick="showTab('qibla')">🧭 القبلة</div>
+<div class="nav-tab" onclick="showTab('azkar')">📿 الأذكار</div>
+<div class="nav-tab" onclick="showTab('tasbih')">📿 السبحة</div>
+<div class="nav-tab" onclick="showTab('quran')">📖 القرآن</div>
+</div>
+<div class="content">
+<div id="prayer" class="tab-content active"><div class="card"><div class="card-title">⏰ مواقيت الصلاة - شبراخيت</div><div id="prayer-times">جاري التحميل...</div></div><div class="card"><div class="card-title">📅 التاريخ الهجري</div><div id="hijri-date"></div></div></div>
+<div id="qibla" class="tab-content"><div class="card"><div class="card-title">🧭 اتجاه القبلة</div><div class="qibla-container"><div class="qibla-compass"><div class="qibla-arrow" id="qibla-arrow"></div></div><div class="qibla-degree" id="qibla-degree">--°</div><p>اتجاه الكعبة من موقعك</p><button class="btn" onclick="getQibla()">تحديث الاتجاه</button></div></div></div>
+<div id="azkar" class="tab-content"><div class="card"><div class="card-title">🌅 أذكار الصباح والمساء</div><div id="azkar-list"></div></div></div>
+<div id="tasbih" class="tab-content"><div class="card"><div class="card-title">📿 السبحة الإلكترونية</div><div class="tasbih-container"><div class="tasbih-text" id="tasbih-text">سبحان الله</div><div class="tasbih-counter" onclick="incrementTasbih()"><div class="tasbih-number" id="tasbih-number">0</div><div class="tasbih-label">اضغط للتسبيح</div></div><select class="input-field" id="tasbih-select" onchange="changeTasbih()"><option>سبحان الله</option><option>الحمد لله</option><option>لا إله إلا الله</option><option>الله أكبر</option><option>استغفر الله</option></select><button class="btn" style="background:#e74c3c" onclick="resetTasbih()">تصفير</button></div></div></div>
+<div id="quran" class="tab-content"><div class="card"><div class="card-title">📖 القرآن الكريم</div><div id="surah-list"></div></div><div id="quran-reader" style="display:none;"><button class="btn btn-secondary" onclick="closeQuran()">⬅️ رجوع</button><div class="quran-reader" id="quran-text"></div></div></div>
+</div>
+<div class="footer">تم تطوير التطبيق بواسطة عمرو شومان - صدقة جارية</div>
+<script>
+// === كود التطبيق الكامل ===
+let tasbihCount = 0;
+function showTab(id){document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');event.target.classList.add('active'); if(id==='prayer') loadPrayerTimes(); if(id==='azkar') loadAzkar(); if(id==='quran') loadSurahs();}
+function incrementTasbih(){tasbihCount++;document.getElementById('tasbih-number').textContent=tasbihCount; if(tasbihCount%33===0) navigator.vibrate(100);}
+function resetTasbih(){tasbihCount=0;document.getElementById('tasbih-number').textContent=0;}
+function changeTasbih(){document.getElementById('tasbih-text').textContent=document.getElementById('tasbih-select').value; resetTasbih();}
+async function loadPrayerTimes(){try{const res=await fetch('https://api.aladhan.com/v1/timingsByCity?city=Shubra%20Khit&country=Egypt&method=5');const data=await res.json();const t=data.data.timings;document.getElementById('prayer-times').innerHTML=`<div class="prayer-time"><span class="prayer-name">الفجر</span><span class="prayer-hour">${t.Fajr}</span></div><div class="prayer-time"><span class="prayer-name">الشروق</span><span class="prayer-hour">${t.Sunrise}</span></div><div class="prayer-time"><span class="prayer-name">الظهر</span><span class="prayer-hour">${t.Dhuhr}</span></div><div class="prayer-time"><span class="prayer-name">العصر</span><span class="prayer-hour">${t.Asr}</span></div><div class="prayer-time"><span class="prayer-name">المغرب</span><span class="prayer-hour">${t.Maghrib}</span></div><div class="prayer-time"><span class="prayer-name">العشاء</span><span class="prayer-hour">${t.Isha}</span></div>`;document.getElementById('hijri-date').innerHTML=data.data.date.hijri.day+' '+data.data.date.hijri.month.ar+' '+data.data.date.hijri.year;}catch(e){document.getElementById('prayer-times').innerHTML='تعذر تحميل المواقيت - تأكد من الانترنت';}}
+
+  function getQibla(){if('geolocation' in navigator){navigator.geolocation.getCurrentPosition(pos=>{const lat=pos.coords.latitude;const lng=pos.coords.longitude;const kaabaLat=21.4225;const kaabaLng=39.8262;const y=Math.sin((kaabaLng-lng)*Math.PI/180);const x=Math.cos(lat*Math.PI/180)*Math.tan(kaabaLat*Math.PI/180)-Math.sin(lat*Math.PI/180)*Math.cos((kaabaLng-lng)*Math.PI/180);let qibla=Math.atan2(y,x)*180/Math.PI;document.getElementById('qibla-degree').textContent=Math.round(qibla)+'°';document.getElementById('qibla-arrow').style.transform='translate(-50%, -100%) rotate('+qibla+'deg)';});}else{alert('المتصفح لا يدعم الموقع');}}
+const azkarData=["أصبحنا وأصبح الملك لله","اللهم إني أصبحت أشهدك","سبحان الله وبحمده","اللهم إني أسألك علما نافعا","حسبي الله لا إله إلا هو","بسم الله الذي لا يضر","أعوذ بكلمات الله التامات"];
+function loadAzkar(){document.getElementById('azkar-list').innerHTML=azkarData.map(z=>'<div class=azkar-item><div class=azkar-text>'+z+'</div><span class=azkar-count>3 مرات</span></div>').join('');}
+const surahs=["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
+function loadSurahs(){document.getElementById('surah-list').innerHTML=surahs.map((n,i)=>'<div class=surah-item onclick=openSurah('+(i+1)+')><div><div class=surah-name>'+(i+1)+'. '+n+'</div></div><div class=surah-number>'+(i+1)+'</div></div>').join('');}
+function openSurah(id){document.getElementById('surah-list').style.display='none';document.getElementById('quran-reader').style.display='block';document.getElementById('quran-text').innerHTML='<h3 style=text-align:center;color:#075e54>سورة '+surahs[id-1]+'</h3><p style=text-align:center>بسم الله الرحمن الرحيم</p><p>الحمد لله رب العالمين</p>';}
+function closeQuran(){document.getElementById('surah-list').style.display='block';document.getElementById('quran-reader').style.display='none';}
+loadPrayerTimes();
+</script>
+</body>
+</html>
