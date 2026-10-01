@@ -1,4 +1,4 @@
-name: Build AAB
+name: Build Signed AAB
 on:
   push:
     branches: [ main ]
@@ -11,23 +11,27 @@ jobs:
         with: { node-version: 20 }
       - uses: actions/setup-java@v4
         with: { distribution: 'temurin', java-version: '17' }
+      
       - run: npm install
       - run: npx cap add android || true
       - run: npx cap copy android
-      - run: |
-          npm version patch --no-git-tag-version
-          echo "VERSION_CODE=$((100 + ${{ github.run_number }}))" >> $GITHUB_ENV
-      - name: Build Unsigned AAB
+
+      - name: Build AAB (unsigned)
         run: |
           cd android
           chmod +x gradlew
           ./gradlew bundleRelease
-      - name: Create Keystore and SIGN AAB
+
+      - name: SIGN AAB with jarsigner
         run: |
-          keytool -genkey -v -keystore /tmp/release.keystore -alias upload -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=MyApp, OU=MyApp, O=MyApp, L=Cairo, S=Cairo, C=EG"
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA256 -keystore /tmp/release.keystore -storepass android123 -keypass android123 android/app/build/outputs/bundle/release/app-release.aab upload
-          jarsigner -verify android/app/build/outputs/bundle/release/app-release.aab
-      - uses: actions/upload-artifact@v4
+          keytool -genkey -v -keystore /tmp/mykey.jks -alias myalias -keyalg RSA -keysize 2048 -validity 10000 -storepass 123456 -keypass 123456 -dname "CN=MyApp"
+          AAB=$(find android/app/build/outputs -name "*.aab" | head -n 1)
+          echo "Signing $AAB"
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA256 -keystore /tmp/mykey.jks -storepass 123456 -keypass 123456 $AAB myalias
+          jarsigner -verify $AAB
+
+      - name: Upload SIGNED AAB
+        uses: actions/upload-artifact@v4
         with:
-          name: app-release-signed
+          name: app-release-SIGNED
           path: android/app/build/outputs/bundle/release/*.aab
