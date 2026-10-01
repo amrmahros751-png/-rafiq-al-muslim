@@ -16,19 +16,41 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Install Cordova
-        run: npm install -g cordova
-      - name: Create Cordova Project
+      - name: Install dependencies
+        run: npm install
+      - name: Add Android platform
         run: |
-          cordova create myApp com.rafiq.almuslim "رفيق المسلم" --no-telemetry || true
-          rm -rf myApp/www/*
-          cp -r www/* myApp/www/
-          cp config.xml myApp/ || echo "no config"
-          cd myApp
-          cordova platform add android
-          cordova build android --release -- --packageType=bundle
+          npx cap add android || true
+          npx cap copy android
+      - name: Create keystore
+        run: |
+          keytool -genkey -v -keystore android/app/release.keystore -alias upload -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=MyApp, OU=MyApp, O=MyApp, L=Cairo, S=Cairo, C=EG"
+      - name: Configure signing
+        run: |
+          cat >> android/app/build.gradle << 'EOF'
+          android {
+            signingConfigs {
+              release {
+                storeFile file('release.keystore')
+                storePassword 'android123'
+                keyAlias 'upload'
+                keyPassword 'android123'
+              }
+            }
+            buildTypes {
+              release {
+                signingConfig signingConfigs.release
+              }
+            }
+          }
+          EOF
+      - name: Build signed AAB
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew bundleRelease
       - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: myApp/platforms/android/app/build/outputs/bundle/release/*.aab
+          path: android/app/build/outputs/bundle/release/*.aab
