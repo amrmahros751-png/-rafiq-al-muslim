@@ -16,22 +16,41 @@ jobs:
       - run: npx cap add android || true
       - run: npx cap copy android
 
-      - name: Build AAB (unsigned)
+      - name: FIX minSdk to 24 + versionCode
+        run: |
+          python3 << 'PY'
+          import pathlib, re
+          # 1. Fix variables.gradle
+          vg = pathlib.Path("android/variables.gradle")
+          if vg.exists():
+              t=vg.read_text()
+              t=re.sub(r'minSdkVersion\s*=\s*\d+', 'minSdkVersion = 24', t)
+              vg.write_text(t)
+          # 2. Fix build.gradle
+          bg = pathlib.Path("android/app/build.gradle")
+          t=bg.read_text()
+          t=re.sub(r'minSdkVersion\s+\d+', 'minSdkVersion 24', t)
+          t=re.sub(r'minSdkVersion\s*=\s*\d+', 'minSdkVersion = 24', t)
+          # bump versionCode
+          t=re.sub(r'versionCode\s+\d+', 'versionCode 10', t)
+          bg.write_text(t)
+          print("FIXED")
+          PY
+
+      - name: Build AAB
         run: |
           cd android
           chmod +x gradlew
           ./gradlew bundleRelease
 
-      - name: SIGN AAB with jarsigner
+      - name: SIGN AAB
         run: |
           keytool -genkey -v -keystore /tmp/mykey.jks -alias myalias -keyalg RSA -keysize 2048 -validity 10000 -storepass 123456 -keypass 123456 -dname "CN=MyApp"
           AAB=$(find android/app/build/outputs -name "*.aab" | head -n 1)
-          echo "Signing $AAB"
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA256 -keystore /tmp/mykey.jks -storepass 123456 -keypass 123456 $AAB myalias
+          jarsigner -sigalg SHA256withRSA -digestalg SHA256 -keystore /tmp/mykey.jks -storepass 123456 -keypass 123456 $AAB myalias
           jarsigner -verify $AAB
 
-      - name: Upload SIGNED AAB
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
-          name: app-release-SIGNED
+          name: app-release-FINAL
           path: android/app/build/outputs/bundle/release/*.aab
